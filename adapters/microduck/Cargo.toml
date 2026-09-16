@@ -1,0 +1,19 @@
+[package]
+name = "microduck-adapter"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+# 唯一具体 Embodiment 实现。只依赖 harboria-embodiment，不依赖 harboria-core ——
+# 这个 adapter 不应该知道 Goal/Decision/Opportunity 这些概念，它只把
+# MicroDuck 官方 robotd/mediad/tofd 等 daemon 的原始状态拍平成
+# harboria-embodiment 定义的语义 Observation。
+
+[dependencies]
+harboria-embodiment.workspace = true
+async-trait.workspace = true
+tokio.workspace = true
+chrono.workspace = true
+serde_json.workspace = true
+anyhow.workspace = true
+tracing.workspace = true

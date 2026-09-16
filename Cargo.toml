@@ -1,0 +1,47 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/harboria-core",
+    "crates/harboria-embodiment",
+    "crates/harboria-execution",
+    "crates/harboria-inference",
+    "crates/harboria-storage",
+    "crates/harboria-protocol",
+    "adapters/microduck",
+    "bins/harboriad",
+    "bins/harboria-cli",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "Apache-2.0"
+repository = "https://github.com/Harboria/harboria"
+
+# 集中管理版本号，避免每个 crate 各写一份、互相漂移。
+# 任何 crate 需要新依赖，先加在这里，再在自己的 Cargo.toml 里 `workspace = true` 引用。
+#
+# 注：这里的版本号刻意钉在沙盒里实际可用的 rustc 1.75 工具链兼容的范围内
+# (registry 里更新的小版本经常要求 edition2024 / 更新的 rustc)。你在自己的
+# 开发机上装了新版 rustc 之后，可以放心 `cargo update` 到各个 crate的最新版。
+[workspace.dependencies]
+tokio = { version = "=1.38.1", features = ["rt-multi-thread", "macros", "sync", "time", "net", "io-util"] }
+async-trait = "=0.1.77"
+serde = { version = "=1.0.197", features = ["derive"] }
+serde_json = "=1.0.114"
+chrono = { version = "=0.4.31", features = ["serde"] }
+uuid = { version = "=1.7.0", features = ["v4", "serde"] }
+thiserror = "=1.0.58"
+anyhow = "=1.0.81"
+tracing = "=0.1.40"
+tracing-subscriber = { version = "=0.3.18", features = ["env-filter"] }
+clap = { version = "=4.4.18", features = ["derive"] }
+rusqlite = { version = "=0.31.0", features = ["bundled", "chrono", "uuid"] }
+
+harboria-core = { path = "crates/harboria-core" }
+harboria-embodiment = { path = "crates/harboria-embodiment" }
+harboria-execution = { path = "crates/harboria-execution" }
+harboria-inference = { path = "crates/harboria-inference" }
+harboria-storage = { path = "crates/harboria-storage" }
+harboria-protocol = { path = "crates/harboria-protocol" }
+microduck-adapter = { path = "adapters/microduck" }
